@@ -2,7 +2,7 @@ package com.example.spring5recipeapp.bootstrap;
 
 import com.example.spring5recipeapp.domain.*;
 import com.example.spring5recipeapp.repositories.CategoryRepository;
-import com.example.spring5recipeapp.repositories.RecipeRepositories;
+import com.example.spring5recipeapp.repositories.RecipeRepository;
 import com.example.spring5recipeapp.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -20,21 +20,21 @@ import java.util.Optional;
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
-    private final RecipeRepositories recipeRepositories;
+    private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
     public RecipeBootstrap(CategoryRepository categoryRepository,
-                           RecipeRepositories recipeRepositories,
+                           RecipeRepository recipeRepository,
                            UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
-        this.recipeRepositories = recipeRepositories;
+        this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        recipeRepositories.saveAll(getRecipe());
+        recipeRepository.saveAll(getRecipe());
         log.debug("Loading bootstrap data");
     }
 
